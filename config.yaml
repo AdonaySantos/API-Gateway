@@ -1,0 +1,11 @@
+routes:
+  - path: /auth
+    service: http://localhost:5001
+    plugins:
+      - jwt_auth
+
+  - path: /books/{id}
+    service: http://localhost:5003
+    plugins:
+      - request_size_limiting
+      - add_header
