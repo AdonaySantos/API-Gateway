@@ -1,12 +1,12 @@
 import os, yaml, time, threading
 from re import sub, match
 from typing import Any
-from models.router_model import Router
+from models.route_config import RouteConfig
 
 class YamlLoader:
     def __init__(self, config_path: str) -> None:
         self.config_path: str = config_path
-        self._config_data: dict[str, Router] = {}
+        self._config_data: dict[str, RouteConfig] = {}
         self.last_modified: float | None = None
 
         self.load_config()
@@ -27,7 +27,7 @@ class YamlLoader:
                 plugins: list[str] = route.get("plugins", [])
 
                 if path and service:
-                    self._config_data[path] = Router(service=service, plugins=plugins)
+                    self._config_data[path] = RouteConfig(service=service, plugins=plugins)
         except Exception as e:
             print(f"Erro ao carregar config: {e}")
 

@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
-class Router(BaseModel):
+class RouteConfig(BaseModel):
     service: str
     plugins: list[str]
