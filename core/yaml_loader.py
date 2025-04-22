@@ -1,7 +1,7 @@
 import os, yaml, time, threading
 from re import sub, match
 from typing import Any
-from models.router import Router
+from models.router_model import Router
 
 class YamlLoader:
     def __init__(self, config_path: str) -> None:
@@ -55,11 +55,11 @@ class YamlLoader:
                 return route_path
         return None
 
-    def get_service_for_route(self, path: str) -> str | None:
+    def get_service_for_route(self, path: str) -> str:
         route = self.get_route_match(path)
         if route:
             return self._config_data[route].service
-        return
+        return ""
 
     def get_plugins_for_route(self, path: str) -> list[str]:
         route = self.get_route_match(path)
@@ -70,18 +70,3 @@ class YamlLoader:
     def _is_path_match(self, route_path: str, incoming_path: str) -> bool:
         pattern = sub(r"\{[^/]+\}", r"[^/]+", route_path)
         return match(f"^{pattern}$", incoming_path) is not None
-
-
-if __name__ == '__main__':
-    loader = YamlLoader("./config.yaml")
-    
-    test_path = "/users/{12}"
-    print("Rota encontrada: ", loader.get_route_match(test_path))
-    print("Serviço: ", loader.get_service_for_route(test_path))
-    print("Plugins: ", loader.get_plugins_for_route(test_path))
-    
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        print('Encerrando watcher...')
