@@ -1,8 +1,13 @@
 routes:
-  - path: /auth
+  - path: /auth/login
     service: http://localhost:5001
     plugins:
       - csrf_checker
+
+  - path: /auth/me
+    service: http://localhost:5001
+    plugins:
+      - auth
 
   - path: /books
     service: http://localhost:5000
