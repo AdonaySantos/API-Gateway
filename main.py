@@ -3,7 +3,6 @@ from fastapi.responses import JSONResponse
 from core.yaml_loader import YamlLoader
 from core.middleware import apply_plugins
 from core.proxy import proxy_request
-from jose import ExpiredSignatureError, JWTError
 
 app = FastAPI()
 yaml_loader = YamlLoader("./config.yaml")
@@ -22,4 +21,4 @@ async def gateway_handler(request: Request, full_path: str) -> JSONResponse:
         _ = await apply_plugins(request, plugins)
         return await proxy_request(request, service_url)
     except Exception as e:
-        return JSONResponse(status_code=e.status_code, content={"error": f"Error interno: {str(e)}"})
+        return JSONResponse(status_code=404, content={"error": f"Error interno: {str(e)}"})
