@@ -5,11 +5,9 @@ import httpx
 async def proxy_request(request: Request, target_url: str) -> JSONResponse:
     async with httpx.AsyncClient() as client:
         url = f"{target_url}{request.url.path}"
-        print(url)
 
         body = await request.body()
 
-        # bug aqui resolver o proxied_response
         proxied_response = await client.request(
             method=request.method,
             url=url,

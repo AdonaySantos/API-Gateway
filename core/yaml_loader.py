@@ -41,7 +41,7 @@ class YamlLoader:
     def start_auto_reload(self) -> None:
         def watcher():
             while True:
-                time.sleep(5)
+                time.sleep(1)
                 if self.has_file_change():
                     print("Reload arquivo de configuração alterado. Recarregando...")
                     self.load_config()
